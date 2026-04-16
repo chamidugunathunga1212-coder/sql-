@@ -118,6 +118,30 @@ FROM Sales.Orders;
 
 
 
+-----------------------------------------------------
+-- percentange ranking
+
+-- 1. CUME_DIST() --> Cumalative Distributin calculates the distribution of data points within a window
+
+-- 2. PERCENT_RANK() --> calculate the relative position of each rwo
+
+-- find the products that fall within the highest 40% of prices
+
+SELECT *
+FROM
+(
+	SELECT 
+		ProductID,
+		Product,
+		Price,
+		CUME_DIST() OVER (ORDER BY Price DESC) AS product_price_rank
+	FROM Sales.Products
+
+) AS t
+WHERE t.product_price_rank <= 0.4
+
+
+
 
 
 
